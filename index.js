@@ -24,8 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
   if (inputs.length > 0) {
     inputs[0].focus();
   }
-  console.log('length: ');
-  console.log(inputs.length);
 
   inputs.forEach((input, index) => {
     input.addEventListener("input", function () {
@@ -35,11 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
         this.value = value; // Set the input value
         letters++;
         enterKey = false;
-        console.log("letters: ");
-        console.log(letters);
         row = Math.floor(letters / 5);
-        console.log("row:");
-        console.log(row);
         if (index < inputs.length - 1 && !(letters % 5 === 0)) {
           inputs[index + 1].focus(); // Move to the next input box
         }
@@ -55,10 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
           inputs[index - 1].value = ""; // Clear the previous box when backspace is pressed
           letters--;
           row = Math.floor(letters / 5);
-          console.log("row minus:");
-          console.log(row);
-          console.log("letters minus: ");
-          console.log(letters);
         } else if (this.value.length > 0) {
           this.value = "";
           letters--;
@@ -81,17 +71,14 @@ document.addEventListener("DOMContentLoaded", function () {
   function selectRandomWord() {
     const randomIndex = Math.floor(Math.random() * wordDatabase.length);
     randomWord = wordDatabase[randomIndex];
-    console.log("Random word:", randomWord); // Debugging line to see the selected word
   }
 
   function validateWord() {
     let word = "";
-    console.log(row);
     for (let i = (row - 1) * 5; i < (row - 1) * 5 + 5; i++) {
       word += inputs[i].value;
     }
 
-    console.log(word);
 
     if (word.length !== 5) {
       message.textContent = "Please enter a 5-letter word.";
@@ -129,13 +116,12 @@ document.addEventListener("DOMContentLoaded", function () {
           "linear-gradient(145deg, #7e7a7a, #c3d632)";
         inputs[i + (row - 1) * 5].style.width = "50px";
         inputs[i + (row - 1) * 5].style.height = "50px";
-        console.log("cccccc");
         randomWordArray[randomWordArray.indexOf(wordArray[i])] = null; // Mark this letter as used
       } else if (wordArray[i] !== null) {
         inputs[i + (row - 1) * 5].style.backgroundColor = "initial"; // Incorrect letter
       }
     }
-
+    message.style.color = "white";
     message.textContent = word;
 
     if (word === randomWord) {
